@@ -17,6 +17,18 @@ class Channel:
         self.video_count = self.channel['items'][0]['statistics']['videoCount']
         self.views_count = self.channel['items'][0]['statistics']['viewCount']
 
+    def __str__(self):
+        return f"Youtube-канал: {self.title}"
+
+    def __add__(self, other) -> int:
+        return self.subscriber_count + other.subscriber_count
+
+    def __lt__(self, other) -> bool:
+        return self.subscriber_count < other.subscriber_count
+
+    def __gt__(self, other) -> bool:
+        return self.subscriber_count > other.subscriber_count
+
     @property
     def channel_id(self):
         return self.id
@@ -40,18 +52,23 @@ class Channel:
             json.dump(data, file, indent=2, ensure_ascii=False)
 
 
-vdud = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
-
+ch1 = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')  # Вдудь
+ch2 = Channel('UC1eFXmJNkjITxPFWTy6RsWg')  # Редакция
 # получаем значения атрибутов
-print(vdud.title)
-print(vdud.video_count)
-print(vdud.url)
+print(ch1.title)
+print(ch1.video_count)
+print(ch1.url)
 
-# менять не можем
-vdud.channel_id = 'Новое название'
+# # менять не можем
+# ch1.channel_id = 'Новое название'
 
 # можем получить объект для работы с API вне класса
 print(Channel.get_service())
 
 # создать файл 'vdud.json' в данными по каналу
-vdud.to_json('vdud.json')
+ch1.to_json('vdud.json')
+print(ch1)
+print(ch2)
+print(ch1 + ch2)
+print(ch1 > ch2)
+print(ch1 < ch2)

@@ -21,12 +21,18 @@ class Channel:
         return f"Youtube-канал: {self.title}"
 
     def __add__(self, other) -> int:
+        if not isinstance(other, Channel):
+            raise ValueError('Второй объект не Channel')
         return self.subscriber_count + other.subscriber_count
 
     def __lt__(self, other) -> bool:
+        if not isinstance(other, Channel):
+            raise ValueError('Второй объект не Channel')
         return self.subscriber_count < other.subscriber_count
 
     def __gt__(self, other) -> bool:
+        if not isinstance(other, Channel):
+            raise ValueError('Второй объект не Channel')
         return self.subscriber_count > other.subscriber_count
 
     @property

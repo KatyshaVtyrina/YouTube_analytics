@@ -1,4 +1,6 @@
 import json
+
+
 from youtube import youtube
 
 
@@ -31,7 +33,7 @@ class Channel:
         """Складывает по количеству подписчиков, если второй экземпляр Channel"""
         if not isinstance(other, Channel):
             raise ValueError('Второй объект не Channel')
-        return self.subscriber_count + other.subscriber_count
+        return int(self.subscriber_count) + int(other.subscriber_count)
 
     def __lt__(self, other) -> bool:
         """Сравнивает по количеству подписчиков, если второй экземпляр Channel"""
@@ -40,59 +42,61 @@ class Channel:
         return self.subscriber_count < other.subscriber_count
 
     @property
-    def channel_id(self):
+    def channel_id(self) -> str:
         """Возвращает id"""
         return self.__channel_id
 
     @property
-    def title(self):
+    def title(self) -> str:
         """Возвращает название канала"""
         return self.__title
 
     @property
-    def description(self):
+    def description(self) -> str:
         """Возвращает описание канала"""
         return self.__description
 
     @property
-    def url(self):
+    def url(self) -> str:
         """Возвращает ссылку на канал"""
         return self.__url
 
     @property
-    def subscriber_count(self):
+    def subscriber_count(self) -> str:
         """Возвращает количество подписчиков"""
         return self.__subscriber_count
 
     @property
-    def video_count(self):
+    def video_count(self) -> str:
         """Возвращает количество видео"""
         return self.__video_count
 
     @property
-    def views_count(self):
+    def views_count(self) -> str:
         """Возвращает количество просмотров"""
         return self.__views_count
 
     @classmethod
-    # создать специальный объект для работы с API
     def get_service(cls):
+        """Возвращает объект для работы с API ютуба"""
         return youtube
 
     @classmethod
-    def get_channel(cls, channel_id):
+    def get_channel(cls, channel_id: str) -> dict:
+        """Получает информацию о канале"""
         channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
         return channel
 
     @property
-    def channel(self):
+    def channel(self) -> dict:
+        """Возвращает информацию о канале"""
         return self.get_channel(self.channel_id)
 
-    def print_info(self):
+    def print_info(self) -> json:
         """Вывод информации на экран"""
-        print(json.dumps(self.get_channel(self.channel_id), indent=2, ensure_ascii=False))
+        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
 
-    def to_json(self, name):
+    def to_json(self, name: str) -> json:
         """Сохраняет информацию по каналу, хранящуюся в атрибутах экземпляра класса Channel, в json-файл"""
         with open(name, 'w', encoding='utf-8') as file:
             data = {'id': self.channel_id, 'title': self.title, 'description': self.description,
@@ -112,7 +116,7 @@ print(ch1.url)
 # ch1.channel_id = 'Новое название'
 
 # можем получить объект для работы с API вне класса
-print(type(Channel.get_service()))
+print(Channel.get_service())
 
 # создать файл 'vdud.json' в данными по каналу
 ch1.to_json('vdud.json')

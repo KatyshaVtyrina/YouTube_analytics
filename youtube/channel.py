@@ -1,11 +1,8 @@
 import json
-import os
-from googleapiclient.discovery import build
+from youtube import youtube
 
 
 class Channel:
-    # SKYPROAPIKEY скопирован из гугла и вставлен в переменные окружения
-    api_key: str = os.getenv('SKYPROAPIKEY')
 
     def __init__(self, channel_id):
         """Инициализация по id
@@ -19,7 +16,7 @@ class Channel:
         - video_count: количество видео
         - view_count: количество просмотров"""
         self.__channel_id = channel_id
-        channel = self.get_info()
+        channel = self.get_channel(self.__channel_id)
         self.__title = channel['items'][0]['snippet']['title']
         self.__description = channel['items'][0]['snippet']['description']
         self.__url = channel['items'][0]['snippet']['thumbnails']['default']['url']
@@ -80,18 +77,20 @@ class Channel:
     @classmethod
     # создать специальный объект для работы с API
     def get_service(cls):
-        """Создает и возвращает специальный объект для работы с API"""
-        youtube = build('youtube', 'v3', developerKey=cls.api_key)
         return youtube
 
-    def get_info(self):
-        """Возвращает информацию о канале"""
-        channel = self.get_service().channels().list(id=self.channel_id, part='snippet,statistics').execute()
+    @classmethod
+    def get_channel(cls, channel_id):
+        channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
         return channel
+
+    @property
+    def channel(self):
+        return self.get_channel(self.channel_id)
 
     def print_info(self):
         """Вывод информации на экран"""
-        print(json.dumps(self.get_info(), indent=2, ensure_ascii=False))
+        print(json.dumps(self.get_channel(self.channel_id), indent=2, ensure_ascii=False))
 
     def to_json(self, name):
         """Сохраняет информацию по каналу, хранящуюся в атрибутах экземпляра класса Channel, в json-файл"""
@@ -113,7 +112,7 @@ print(ch1.url)
 # ch1.channel_id = 'Новое название'
 
 # можем получить объект для работы с API вне класса
-print(Channel.get_service())
+print(type(Channel.get_service()))
 
 # создать файл 'vdud.json' в данными по каналу
 ch1.to_json('vdud.json')
@@ -122,3 +121,4 @@ print(ch2)
 print(ch1 + ch2)
 print(ch1 > ch2)
 print(ch1 < ch2)
+print(ch1.print_info())

@@ -105,6 +105,7 @@ class PLVideo(Video):
 
     @property
     def playlist_channel(self) -> dict:
+        """Возвращает плейлист канала"""
         return self.get_playlist_channel(self.channel_id)
 
     def print_info_playlist(self) -> json:

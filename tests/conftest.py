@@ -1,6 +1,7 @@
 import pytest
 
 from youtube.channel import Channel
+from youtube.playlist import PlayList
 from youtube.video import PLVideo, Video
 
 
@@ -22,3 +23,13 @@ def video_1():
 @pytest.fixture
 def video_2():
     return PLVideo('BBotskuyw_M', 'PL7Ntiz7eTKwrqmApjln9u4ItzhDLRtPuD')
+
+
+@pytest.fixture
+def video_3():
+    return PLVideo('9lO06Zxhu88', 'PL7Ntiz7eTKwrqmApjln9u4ItzhDLRtPuD')
+
+
+@pytest.fixture
+def playlist_1():
+    return PlayList('PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb')

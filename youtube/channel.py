@@ -41,6 +41,12 @@ class Channel:
             raise ValueError('Второй объект не Channel')
         return self.subscriber_count < other.subscriber_count
 
+    def __gt__(self, other) -> bool:
+        """Сравнивает по количеству подписчиков, если второй экземпляр Channel"""
+        if not isinstance(other, Channel):
+            raise ValueError('Второй объект не Channel')
+        return self.subscriber_count > other.subscriber_count
+
     @property
     def channel_id(self) -> str:
         """Возвращает id"""

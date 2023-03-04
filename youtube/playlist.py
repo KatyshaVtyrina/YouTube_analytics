@@ -11,30 +11,37 @@ class PlayList(Basic):
         self.__url = f'https://www.youtube.com/playlist?list={self.__playlist_id}'
 
     @property
-    def playlist_id(self):
+    def playlist_id(self) -> str:
+        """Возвращает id плейлиста"""
         return self.__playlist_id
 
     @property
-    def title(self):
+    def title(self) -> str:
+        """Возвращает название плейлиста"""
         return self.__title
 
     @property
-    def url(self):
+    def url(self) -> str:
+        """Возвращает ссылку на плейлист"""
         return self.__url
 
     @property
-    def playlist(self):
+    def playlist(self) -> dict:
+        """"""
         return self._get_playlist(playlist_id=self.__playlist_id)
 
     @property
-    def ids_videos(self):
-        return self._get_id_videos_in_playlist(playlist_id=self.__playlist_id)
+    def ids_videos(self) -> list:
+        """Возвращает список id всех видел в плейлисте"""
+        return self._get_ids_videos_in_playlist(playlist_id=self.__playlist_id)
 
     @property
-    def total_duration(self):
+    def total_duration(self) -> datetime.timedelta:
+        """Возвращает общее время плейлиста"""
         return self.get_total_duration()
 
-    def get_total_duration(self):
+    def get_total_duration(self) -> datetime.timedelta:
+        """Получает общее время плейлиста"""
         videos = self._get_info_video_in_playlist(ids_videos=self.ids_videos)
         total = datetime.timedelta()
 
@@ -59,5 +66,5 @@ class PlayList(Basic):
                f"https://youtu.be/{best_id}"
 
 
-pl = PlayList('PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb')
-print(type(pl._get_info_video_in_playlist(pl.ids_videos)))
+# pl = PlayList('PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb')
+# print(pl.show_best_video())

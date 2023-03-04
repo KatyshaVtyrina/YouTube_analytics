@@ -11,6 +11,11 @@ class Basic:
     def __init__(self, *args, **kwargs):
         raise ValueError(f'Нельзя создавать экземпляр класса {__class__.__name__}.')
 
+    @staticmethod
+    def dict_to_json(data: dict) -> json:
+        """Возвращает словарь в формате json"""
+        return json.dumps(data, indent=2, ensure_ascii=False)
+
     @classmethod
     def get_service(cls):
         """Возвращает объект для работы с API ютуба"""
@@ -21,11 +26,6 @@ class Basic:
         """Получает информацию о канале"""
         channel = cls.youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
         return channel
-
-    @staticmethod
-    def _print_info(data: dict) -> json:
-        """Вывод информации на экран"""
-        return json.dumps(data, indent=2, ensure_ascii=False)
 
     @classmethod
     def _get_video(cls, video_id) -> dict:
@@ -48,7 +48,7 @@ class Basic:
         return playlist
 
     @classmethod
-    def _get_id_videos_in_playlist(cls, playlist_id: str) -> list:
+    def _get_ids_videos_in_playlist(cls, playlist_id: str) -> list:
         """Получает все id видео из плейлиста"""
         playlist_videos = cls.youtube.playlistItems().list(playlistId=playlist_id,
                                                            part='contentDetails',

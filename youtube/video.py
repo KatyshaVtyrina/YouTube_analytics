@@ -19,14 +19,14 @@ class Video(Basic):
         return self.__title
 
     @property
-    def video_id(self):
-        """Возвращает id"""
-        return self.__video_id
-
-    @property
     def info_video(self) -> dict:
         """Возвращает словарь с данными по видео"""
         return self._get_video(self.__video_id)
+
+    @property
+    def video_id(self):
+        """Возвращает id"""
+        return self.__video_id
 
     @property
     def title(self) -> str:
@@ -45,7 +45,8 @@ class Video(Basic):
 
     def print_info(self) -> json:
         """Вывод информации на экран"""
-        print(super()._print_info(data=self.info_video))
+        print(super().dict_to_json(data=self.info_video))
+
 
 class PLVideo(Video, Basic):
 
@@ -89,7 +90,7 @@ class PLVideo(Video, Basic):
 
     def print_info_playlist(self) -> json:
         """Вывод информации о плейлисте на экран"""
-        print(super()._print_info(data=self.playlist))
+        print(super().dict_to_json(data=self.playlist))
 
     def check_video_in_playlist(self) -> str:
         """Получение информации о нахождении видео в плейлисте"""

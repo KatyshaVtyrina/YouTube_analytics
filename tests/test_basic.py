@@ -34,9 +34,9 @@ def test_get_playlist_channel(video_2):
     assert type(video_2.playlist_channel) is dict
 
 
-def test_get_id_videos_in_playlist(playlist_1):
+def test_get_ids_videos_in_playlist(playlist_1):
     """Ожидается dict - информация о плейлисте канала"""
-    assert type(Basic._get_id_videos_in_playlist(playlist_id=playlist_1.playlist_id)) is list
+    assert type(Basic._get_ids_videos_in_playlist(playlist_id=playlist_1.playlist_id)) is list
 
 
 def test_get_info_video_in_playlist(playlist_1):
@@ -44,7 +44,7 @@ def test_get_info_video_in_playlist(playlist_1):
     assert type(playlist_1._get_info_video_in_playlist(ids_videos=playlist_1.ids_videos)) is dict
 
 
-def test_print_info():
+def test_dict_to_json():
     data = {'One': True, '2': 'Two'}
-    data_json = Basic._print_info(data)
+    data_json = Basic.dict_to_json(data)
     assert json.loads(data_json) == data

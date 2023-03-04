@@ -17,7 +17,6 @@ class Channel(Basic):
         - video_count: количество видео
         - view_count: количество просмотров"""
         self.__channel_id = channel_id
-        # channel = self.channel(self.__channel_id)
         self.__title = self.channel['items'][0]['snippet']['title']
         self.__description = self.channel['items'][0]['snippet']['description']
         self.__url = self.channel['items'][0]['snippet']['thumbnails']['default']['url']
@@ -87,8 +86,8 @@ class Channel(Basic):
         return self._get_channel(channel_id=self.__channel_id)
 
     def print_info(self) -> json:
-        """Вывод информации на экран"""
-        print(super()._print_info(data=self.channel))
+        """Вывод информации о канале на экран"""
+        print(super().dict_to_json(data=self.channel))
 
     def to_json(self, name: str) -> json:
         """Сохраняет информацию по каналу, хранящуюся в атрибутах экземпляра класса Channel, в json-файл"""

@@ -1,6 +1,4 @@
 import pytest
-import youtube
-from youtube.channel import Channel
 
 
 def test_add(channel_1, channel_2):
@@ -49,13 +47,3 @@ def test_get_attributes_channel(channel_1):
     assert type(channel_1.subscriber_count) is str
     assert type(channel_1.video_count) is str
     assert type(channel_1.views_count) is str
-
-
-def test_get_service():
-    """Ожидается получение объекта для работы с API ютуба"""
-    assert Channel.get_service() == youtube.youtube
-
-
-def test_get_channel(channel_1):
-    """Ожидается dict - информация о канале """
-    assert type(channel_1.channel) is dict

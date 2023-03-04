@@ -1,12 +1,11 @@
 import json
 
+from youtube.basic import Basic
 
-from youtube import youtube
 
+class Channel(Basic):
 
-class Channel:
-
-    def __init__(self, channel_id):
+    def __init__(self, channel_id: str):
         """Инициализация по id
         При создании экземпляра инициализируются атрибуты:
         - channel_id: id канала
@@ -18,13 +17,13 @@ class Channel:
         - video_count: количество видео
         - view_count: количество просмотров"""
         self.__channel_id = channel_id
-        channel = self.get_channel(self.__channel_id)
-        self.__title = channel['items'][0]['snippet']['title']
-        self.__description = channel['items'][0]['snippet']['description']
-        self.__url = channel['items'][0]['snippet']['thumbnails']['default']['url']
-        self.__subscriber_count = channel['items'][0]['statistics']['subscriberCount']
-        self.__video_count = channel['items'][0]['statistics']['videoCount']
-        self.__views_count = channel['items'][0]['statistics']['viewCount']
+        # channel = self.channel(self.__channel_id)
+        self.__title = self.channel['items'][0]['snippet']['title']
+        self.__description = self.channel['items'][0]['snippet']['description']
+        self.__url = self.channel['items'][0]['snippet']['thumbnails']['default']['url']
+        self.__subscriber_count = self.channel['items'][0]['statistics']['subscriberCount']
+        self.__video_count = self.channel['items'][0]['statistics']['videoCount']
+        self.__views_count = self.channel['items'][0]['statistics']['viewCount']
 
     def __str__(self):
         return f"Youtube-канал: {self.title}"
@@ -82,25 +81,14 @@ class Channel:
         """Возвращает количество просмотров"""
         return self.__views_count
 
-    @classmethod
-    def get_service(cls):
-        """Возвращает объект для работы с API ютуба"""
-        return youtube
-
-    @classmethod
-    def get_channel(cls, channel_id: str) -> dict:
-        """Получает информацию о канале"""
-        channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
-        return channel
-
     @property
     def channel(self) -> dict:
         """Возвращает информацию о канале"""
-        return self.get_channel(self.channel_id)
+        return self._get_channel(channel_id=self.__channel_id)
 
     def print_info(self) -> json:
         """Вывод информации на экран"""
-        print(json.dumps(self.channel, indent=2, ensure_ascii=False))
+        print(super()._print_info(data=self.channel))
 
     def to_json(self, name: str) -> json:
         """Сохраняет информацию по каналу, хранящуюся в атрибутах экземпляра класса Channel, в json-файл"""
@@ -109,26 +97,3 @@ class Channel:
                     'url': self.url, 'subscriber_count': self.subscriber_count, 'video_count': self.video_count,
                     'views_count': self.views_count}
             json.dump(data, file, indent=2, ensure_ascii=False)
-
-
-ch1 = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')  # Вдудь
-ch2 = Channel('UC1eFXmJNkjITxPFWTy6RsWg')  # Редакция
-# получаем значения атрибутов
-print(ch1.title)
-print(ch1.video_count)
-print(ch1.url)
-
-# # менять не можем
-# ch1.channel_id = 'Новое название'
-
-# можем получить объект для работы с API вне класса
-print(Channel.get_service())
-
-# создать файл 'vdud.json' в данными по каналу
-ch1.to_json('vdud.json')
-print(ch1)
-print(ch2)
-print(ch1 + ch2)
-print(ch1 > ch2)
-print(ch1 < ch2)
-print(ch1.print_info())

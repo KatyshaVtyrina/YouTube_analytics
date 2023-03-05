@@ -33,3 +33,8 @@ def video_3():
 @pytest.fixture
 def playlist_1():
     return PlayList('PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb')
+
+
+@pytest.fixture
+def path():
+    return 'tests/test_data/test_to_json.json'

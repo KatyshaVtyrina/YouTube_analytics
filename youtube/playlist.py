@@ -10,6 +10,9 @@ class PlayList(Basic):
         self.__title = self.playlist['items'][0]['snippet']['title']
         self.__url = f'https://www.youtube.com/playlist?list={self.__playlist_id}'
 
+    def __str__(self):
+        return f"Плейлист - '{self.__title}'"
+
     @property
     def playlist_id(self) -> str:
         """Возвращает id плейлиста"""

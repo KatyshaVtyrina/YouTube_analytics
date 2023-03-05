@@ -4,6 +4,10 @@ import pytest
 from youtube.basic import Basic
 
 
+def test_str(playlist_1):
+    assert str(playlist_1) == f"Плейлист - '{playlist_1.title}'"
+
+
 def test_get_attributes_playlist(playlist_1):
     """Ожидается получение str из атрибутов"""
     assert type(playlist_1.playlist_id) is str

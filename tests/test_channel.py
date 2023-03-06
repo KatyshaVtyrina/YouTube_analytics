@@ -1,6 +1,9 @@
+import json
 import pytest
-import youtube
-from youtube.channel import Channel
+
+
+def test_str(channel_1):
+    assert str(channel_1) == f'Youtube-канал: {channel_1.title}'
 
 
 def test_add(channel_1, channel_2):
@@ -51,11 +54,15 @@ def test_get_attributes_channel(channel_1):
     assert type(channel_1.views_count) is str
 
 
-def test_get_service():
-    """Ожидается получение объекта для работы с API ютуба"""
-    assert Channel.get_service() == youtube.youtube
-
-
-def test_get_channel(channel_1):
-    """Ожидается dict - информация о канале """
-    assert type(channel_1.channel) is dict
+def test_to_json(channel_1, path):
+    """Ожидается сохранение информации по каналу в json"""
+    channel_1.to_json(path)
+    with open(path) as f:
+        file = json.load(f)
+        assert type(file['id']) is str
+        assert type(file['title']) is str
+        assert type(file['description']) is str
+        assert type(file['url']) is str
+        assert type(file['subscriber_count']) is str
+        assert type(file['video_count']) is str
+        assert type(file['views_count']) is str

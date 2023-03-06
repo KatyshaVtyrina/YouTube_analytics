@@ -8,8 +8,13 @@ class Basic:
     api_key: str = os.getenv('SKYPROAPIKEY')
     youtube = build('youtube', 'v3', developerKey=api_key)
 
-    def __init__(self, *args, **kwargs):
-        raise ValueError(f'Нельзя создавать экземпляр класса {__class__.__name__}.')
+    def __new__(cls, *args, **kwargs):
+        if cls is Basic:
+            raise ValueError(f'Нельзя создавать экземпляр класса {__class__.__name__}.')
+        return super().__new__(cls)
+
+    def __init__(self):
+        pass
 
     @staticmethod
     def dict_to_json(data: dict) -> json:

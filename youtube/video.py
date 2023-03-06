@@ -10,6 +10,7 @@ class Video(Basic):
         - название видео(title)
         - количество просмотров(view_count)
         - количество лайков(like_count)"""
+        super().__init__()
         self.__video_id = video_id
         self.__title = self.info_video['items'][0]['snippet']['localized']['title']
         self.__view_count = self.info_video['items'][0]['statistics']['viewCount']

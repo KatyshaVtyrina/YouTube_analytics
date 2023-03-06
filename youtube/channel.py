@@ -16,6 +16,7 @@ class Channel(Basic):
         - subscriber_count: количество подписчиков
         - video_count: количество видео
         - view_count: количество просмотров"""
+        super().__init__()
         self.__channel_id = channel_id
         self.__title = self.channel['items'][0]['snippet']['title']
         self.__description = self.channel['items'][0]['snippet']['description']

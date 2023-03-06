@@ -6,6 +6,7 @@ from youtube.basic import Basic
 class PlayList(Basic):
 
     def __init__(self, playlist_id):
+        super().__init__()
         self.__playlist_id = playlist_id
         self.__title = self.playlist['items'][0]['snippet']['title']
         self.__url = f'https://www.youtube.com/playlist?list={self.__playlist_id}'
@@ -69,5 +70,5 @@ class PlayList(Basic):
                f"https://youtu.be/{best_id}"
 
 
-# pl = PlayList('PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb')
-# print(pl.show_best_video())
+pl = PlayList('PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb')
+print(pl.playlist)

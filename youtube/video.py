@@ -18,7 +18,7 @@ class Video(Basic):
             self.__view_count = self.info_video['items'][0]['statistics']['viewCount']
             self.__like_count = self.info_video['items'][0]['statistics']['likeCount']
 
-        except Exception:
+        except IndexError:
             self.__title = None
             self.__view_count = None
             self.__like_count = None

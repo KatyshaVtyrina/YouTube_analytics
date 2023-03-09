@@ -11,10 +11,17 @@ class Video(Basic):
         - количество просмотров(view_count)
         - количество лайков(like_count)"""
         super().__init__()
-        self.__video_id = video_id
-        self.__title = self.info_video['items'][0]['snippet']['localized']['title']
-        self.__view_count = self.info_video['items'][0]['statistics']['viewCount']
-        self.__like_count = self.info_video['items'][0]['statistics']['likeCount']
+
+        try:
+            self.__video_id = video_id
+            self.__title = self.info_video['items'][0]['snippet']['localized']['title']
+            self.__view_count = self.info_video['items'][0]['statistics']['viewCount']
+            self.__like_count = self.info_video['items'][0]['statistics']['likeCount']
+
+        except IndexError:
+            self.__title = None
+            self.__view_count = None
+            self.__like_count = None
 
     def __str__(self):
         return self.__title

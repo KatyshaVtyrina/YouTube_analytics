@@ -1,5 +1,6 @@
 import json
 from youtube.basic import Basic
+from youtube.errors import YoutubeApiError
 
 
 class Video(Basic):
@@ -14,11 +15,14 @@ class Video(Basic):
 
         try:
             self.__video_id = video_id
-            self.__title = self.info_video['items'][0]['snippet']['localized']['title']
-            self.__view_count = self.info_video['items'][0]['statistics']['viewCount']
-            self.__like_count = self.info_video['items'][0]['statistics']['likeCount']
+            if self.info_video['items']:
+                self.__title = self.info_video['items'][0]['snippet']['localized']['title']
+                self.__view_count = self.info_video['items'][0]['statistics']['viewCount']
+                self.__like_count = self.info_video['items'][0]['statistics']['likeCount']
+            else:
+                raise YoutubeApiError
 
-        except IndexError:
+        except YoutubeApiError:
             self.__title = None
             self.__view_count = None
             self.__like_count = None
